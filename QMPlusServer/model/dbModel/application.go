@@ -1,11 +1,12 @@
 package dbModel
 
 import (
-	"github.com/jinzhu/gorm"
 	"time"
+
+	"github.com/jinzhu/gorm"
 )
 
-//申请model 工作流实例
+// 申请model 工作流实例
 
 type Application struct {
 	gorm.Model

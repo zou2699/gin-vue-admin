@@ -2,9 +2,11 @@ package api
 
 import (
 	"fmt"
+
 	"github.com/gin-gonic/gin"
-	"main/controller/servers"
-	"main/model/dbModel"
+
+	"qmserver/controller/servers"
+	"qmserver/model/dbModel"
 )
 
 // @Tags workflow

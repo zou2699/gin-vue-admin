@@ -3,10 +3,11 @@ package servers
 import (
 	"context"
 	"fmt"
-	"github.com/qiniu/api.v7/auth/qbox"
-	"github.com/qiniu/api.v7/storage"
 	"mime/multipart"
 	"time"
+
+	"github.com/qiniu/api.v7/auth/qbox"
+	"github.com/qiniu/api.v7/storage"
 )
 
 var accessKey string = "25j8dYBZ2wuiy0yhwShytjZDTX662b8xiFguwxzZ" // 你在七牛云的accessKey  这里是我个人测试号的key 仅供测试使用 恳请大家不要乱传东西
@@ -43,7 +44,7 @@ func Upload(file *multipart.FileHeader, bucket string, urlPath string) (err erro
 	err = formUploader.Put(context.Background(), &ret, upToken, fileKey, f, dataLen, &putExtra)
 	if err != nil {
 		fmt.Println(err)
-		//qmlog.QMLog.Info(err)
+		// qmlog.QMLog.Info(err)
 		return err, "", ""
 	}
 	return err, urlPath + "/" + ret.Key, ret.Key
@@ -58,7 +59,7 @@ func DeleteFile(bucket string, key string) error {
 	}
 	// 指定空间所在的区域，如果不指定将自动探测
 	// 如果没有特殊需求，默认不需要指定
-	//cfg.Zone=&storage.ZoneHuabei
+	// cfg.Zone=&storage.ZoneHuabei
 	bucketManager := storage.NewBucketManager(mac, &cfg)
 	err := bucketManager.Delete(bucket, key)
 	if err != nil {

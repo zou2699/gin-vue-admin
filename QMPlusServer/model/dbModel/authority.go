@@ -3,14 +3,15 @@ package dbModel
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	"main/controller/servers"
-	"main/init/qmsql"
-	"main/model/modelInterface"
+
+	"qmserver/controller/servers"
+	"qmserver/init/qmsql"
+	"qmserver/model/modelInterface"
 )
 
 type Authority struct {
 	gorm.Model
-	AuthorityId   string   `json:"authorityId" gorm:"not null;unique"`
+	AuthorityId   string `json:"authorityId" gorm:"not null;unique"`
 	AuthorityName string `json:"authorityName"`
 }
 
@@ -30,8 +31,6 @@ func (a *Authority) DeleteAuthority() (err error) {
 	}
 	return err
 }
-
-
 
 // 分页获取数据  需要分页实现这个接口即可
 func (a *Authority) GetInfoList(info modelInterface.PageInfo) (err error, list interface{}, total int) {

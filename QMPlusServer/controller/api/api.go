@@ -2,10 +2,12 @@ package api
 
 import (
 	"fmt"
+
 	"github.com/gin-gonic/gin"
-	"main/controller/servers"
-	"main/model/dbModel"
-	"main/model/modelInterface"
+
+	"qmserver/controller/servers"
+	"qmserver/model/dbModel"
+	"qmserver/model/modelInterface"
 )
 
 type CreateApiParams struct {
@@ -79,7 +81,7 @@ func SetAuthAndApi(c *gin.Context) {
 	}
 }
 
-//条件搜索后端看此api
+// 条件搜索后端看此api
 
 // @Tags Api
 // @Summary 分页获取API列表

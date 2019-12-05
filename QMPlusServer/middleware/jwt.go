@@ -3,12 +3,14 @@ package middleware
 import (
 	"errors"
 	"fmt"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"main/controller/servers"
-	"main/init/qmsql"
-	"time"
+
+	"qmserver/controller/servers"
+	"qmserver/init/qmsql"
 )
 
 type SqlRes struct {
@@ -84,7 +86,7 @@ func NewJWT() *JWT {
 	}
 }
 
-//获取token
+// 获取token
 func GetSignKey() string {
 	return SignKey
 }
@@ -95,13 +97,13 @@ func SetSignKey(key string) string {
 	return SignKey
 }
 
-//创建一个token
+// 创建一个token
 func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
 }
 
-//解析 token
+// 解析 token
 func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (i interface{}, e error) {
 		return j.SigningKey, nil

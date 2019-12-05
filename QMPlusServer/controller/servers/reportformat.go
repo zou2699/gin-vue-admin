@@ -1,10 +1,12 @@
 package servers
 
 import (
-	"github.com/gin-gonic/gin"
-	"main/init/qmlog"
 	"net/http"
 	"time"
+
+	"github.com/gin-gonic/gin"
+
+	"qmserver/init/qmlog"
 )
 
 func ReportFormat(c *gin.Context, success bool, msg string, json gin.H) {

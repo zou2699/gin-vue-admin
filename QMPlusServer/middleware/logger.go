@@ -1,9 +1,11 @@
 package middleware
 
 import (
-	"github.com/gin-gonic/gin"
-	"main/init/qmlog"
 	"time"
+
+	"github.com/gin-gonic/gin"
+
+	"qmserver/init/qmlog"
 )
 
 func Logger() gin.HandlerFunc {
@@ -14,7 +16,7 @@ func Logger() gin.HandlerFunc {
 		c.Next()
 		// 结束时间
 		end := time.Now()
-		//执行时间
+		// 执行时间
 		latency := end.Sub(start)
 
 		path := c.Request.URL.Path

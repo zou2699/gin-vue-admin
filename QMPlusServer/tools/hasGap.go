@@ -30,9 +30,9 @@ func HasGap(input interface{}) error {
 	}
 	// 获取方法
 	// 1. 先获取interface的reflect.Type，然后通过.NumMethod进行遍历
-	//for i := 0; i < getType.NumMethod(); i++ {
+	// for i := 0; i < getType.NumMethod(); i++ {
 	//	m := getType.Method(i)
 	//	fmt.Printf("%s: %v\n", m.Name, m.Type)
-	//}
+	// }
 	return nil
 }

@@ -2,9 +2,10 @@ package dbModel
 
 import (
 	"github.com/jinzhu/gorm"
-	"main/controller/servers"
-	"main/init/qmsql"
-	"main/model/modelInterface"
+
+	"qmserver/controller/servers"
+	"qmserver/init/qmsql"
+	"qmserver/model/modelInterface"
 )
 
 type FileUploadAndDownload struct {

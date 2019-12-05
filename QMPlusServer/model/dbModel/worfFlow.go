@@ -2,10 +2,11 @@ package dbModel
 
 import (
 	"github.com/jinzhu/gorm"
-	"main/init/qmsql"
+
+	"qmserver/init/qmsql"
 )
 
-//工作流属性表
+// 工作流属性表
 type Workflow struct {
 	gorm.Model
 	WorkflowNickName    string             `json:"workflowNickName"`    // 工作流名称
@@ -25,7 +26,7 @@ type WorkflowStepInfo struct {
 	IsEnd           bool    `json:"isEnd"`           // 是否是完结流节点
 }
 
-//创建工作流
+// 创建工作流
 func (wk *Workflow) Create() error {
 	err := qmsql.DEFAULTDB.Create(&wk).Error
 	return err

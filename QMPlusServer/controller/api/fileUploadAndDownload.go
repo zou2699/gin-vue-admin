@@ -2,11 +2,13 @@ package api
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"main/controller/servers"
-	"main/model/dbModel"
-	"main/model/modelInterface"
 	"strings"
+
+	"github.com/gin-gonic/gin"
+
+	"qmserver/controller/servers"
+	"qmserver/model/dbModel"
+	"qmserver/model/modelInterface"
 )
 
 // @Tags FileUploadAndDownload
@@ -22,12 +24,12 @@ func UploadFile(c *gin.Context) {
 	if err != nil {
 		servers.ReportFormat(c, false, fmt.Sprintf("上传文件失败，%v", err), gin.H{})
 	} else {
-		//文件上传后拿到文件路径
+		// 文件上传后拿到文件路径
 		err, filePath, key := servers.Upload(header, USER_HEADER_BUCKET, USER_HEADER_IMG_PATH)
 		if err != nil {
 			servers.ReportFormat(c, false, fmt.Sprintf("接收返回值失败，%v", err), gin.H{})
 		} else {
-			//修改数据库后得到修改后的user并且返回供前端使用
+			// 修改数据库后得到修改后的user并且返回供前端使用
 			var file dbModel.FileUploadAndDownload
 			file.Url = filePath
 			file.Name = header.Filename

@@ -2,15 +2,17 @@ package api
 
 import (
 	"fmt"
+	"mime/multipart"
+	"time"
+
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-	"main/controller/servers"
-	"main/middleware"
-	"main/model/dbModel"
-	"main/model/modelInterface"
-	"mime/multipart"
-	"time"
+
+	"qmserver/controller/servers"
+	"qmserver/middleware"
+	"qmserver/model/dbModel"
+	"qmserver/model/modelInterface"
 )
 
 var (
@@ -63,7 +65,7 @@ func Login(c *gin.Context) {
 	}
 }
 
-//登录以后签发jwt
+// 登录以后签发jwt
 func tokenNext(c *gin.Context, user dbModel.User) {
 	j := &middleware.JWT{
 		[]byte("qmPlus"), // 唯一签名
@@ -76,7 +78,7 @@ func tokenNext(c *gin.Context, user dbModel.User) {
 		StandardClaims: jwt.StandardClaims{
 			NotBefore: int64(time.Now().Unix() - 1000),       // 签名生效时间
 			ExpiresAt: int64(time.Now().Unix() + 60*60*24*7), // 过期时间 一周
-			Issuer:    "qmPlus",                              //签名的发行者
+			Issuer:    "qmPlus",                              // 签名的发行者
 		},
 	}
 	token, err := j.CreateToken(clams)
@@ -126,21 +128,21 @@ type UserHeaderImg struct {
 // @Router /user/uploadHeaderImg [post]
 func UploadHeaderImg(c *gin.Context) {
 	claims, _ := c.Get("claims")
-	//获取头像文件
+	// 获取头像文件
 	// 这里我们通过断言获取 claims内的所有内容
 	waitUse := claims.(*middleware.CustomClaims)
 	uuid := waitUse.UUID
 	_, header, err := c.Request.FormFile("headerImg")
-	//便于找到用户 以后从jwt中取
+	// 便于找到用户 以后从jwt中取
 	if err != nil {
 		servers.ReportFormat(c, false, fmt.Sprintf("上传文件失败，%v", err), gin.H{})
 	} else {
-		//文件上传后拿到文件路径
+		// 文件上传后拿到文件路径
 		err, filePath, _ := servers.Upload(header, USER_HEADER_BUCKET, USER_HEADER_IMG_PATH)
 		if err != nil {
 			servers.ReportFormat(c, false, fmt.Sprintf("接收返回值失败，%v", err), gin.H{})
 		} else {
-			//修改数据库后得到修改后的user并且返回供前端使用
+			// 修改数据库后得到修改后的user并且返回供前端使用
 			err, user := new(dbModel.User).UploadHeaderImg(uuid, filePath)
 			if err != nil {
 				servers.ReportFormat(c, false, fmt.Sprintf("修改数据库链接失败，%v", err), gin.H{})

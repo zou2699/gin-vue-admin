@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"main/config"
-	"main/init/initRouter"
-	"main/init/qmlog"
-	"main/init/qmsql"
-	"main/init/registTable"
 	"net/http"
 	"time"
+
+	"qmserver/config"
+	"qmserver/init/initRouter"
+	"qmserver/init/qmlog"
+	"qmserver/init/qmsql"
+	"qmserver/init/registTable"
 )
 
 // @title Swagger Example API

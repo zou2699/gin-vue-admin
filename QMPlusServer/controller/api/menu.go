@@ -2,11 +2,13 @@ package api
 
 import (
 	"fmt"
+
 	"github.com/gin-gonic/gin"
-	"main/controller/servers"
-	"main/middleware"
-	"main/model/dbModel"
-	"main/model/modelInterface"
+
+	"qmserver/controller/servers"
+	"qmserver/middleware"
+	"qmserver/model/dbModel"
+	"qmserver/model/modelInterface"
 )
 
 // @Tags authorityAndMenu

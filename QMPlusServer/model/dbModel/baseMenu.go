@@ -2,11 +2,13 @@ package dbModel
 
 import (
 	"fmt"
+
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
-	"main/controller/servers"
-	"main/init/qmsql"
-	"main/model/modelInterface"
+
+	"qmserver/controller/servers"
+	"qmserver/init/qmsql"
+	"qmserver/model/modelInterface"
 )
 
 type BaseMenu struct {
@@ -76,7 +78,7 @@ func (b *BaseMenu) GetInfoList(info modelInterface.PageInfo) (err error, list in
 	}
 }
 
-//获取基础路由树
+// 获取基础路由树
 func (m *BaseMenu) GetBaseMenuTree() (err error, menus []BaseMenu) {
 	err = qmsql.DEFAULTDB.Where(" parent_id = ?", 0).Find(&menus).Error
 	for i := 0; i < len(menus); i++ {

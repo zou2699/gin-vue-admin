@@ -8,7 +8,7 @@ type PageInfo struct {
 	PageSize int
 }
 
-//分页接口
+// 分页接口
 type Paging interface {
 	GetInfoList(PageInfo) (err error, list interface{}, total int)
 }

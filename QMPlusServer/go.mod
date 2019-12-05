@@ -1,4 +1,4 @@
-module main
+module qmserver
 
 go 1.12
 

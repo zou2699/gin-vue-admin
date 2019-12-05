@@ -4,10 +4,11 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/pkg/errors"
 	uuid "github.com/satori/go.uuid"
-	"main/controller/servers"
-	"main/init/qmsql"
-	"main/model/modelInterface"
-	"main/tools"
+
+	"qmserver/controller/servers"
+	"qmserver/init/qmsql"
+	"qmserver/model/modelInterface"
+	"qmserver/tools"
 )
 
 type User struct {
@@ -19,20 +20,20 @@ type User struct {
 	HeaderImg   string    `json:"headerImg" gorm:"default:'http://www.henrongyi.top/avatar/lufu.jpg'"`
 	Authority   Authority `json:"authority" gorm:"ForeignKey:AuthorityId;AssociationForeignKey:AuthorityId"`
 	AuthorityId string    `json:"-" gorm:"default:888"`
-	//Propertie                //	多余属性自行添加
-	//PropertieId uint  // 自动关联 Propertie 的Id 附加属性过多 建议创建一对一关系
+	// Propertie                //	多余属性自行添加
+	// PropertieId uint  // 自动关联 Propertie 的Id 附加属性过多 建议创建一对一关系
 }
 
-//type Propertie struct {
+// type Propertie struct {
 //	gorm.Model
-//}
+// }
 
-//注册接口model方法
+// 注册接口model方法
 func (u *User) Regist() (err error, userInter *User) {
 	var user User
-	//判断用户名是否注册
+	// 判断用户名是否注册
 	findErr := qmsql.DEFAULTDB.Where("username = ?", u.Username).First(&user).Error
-	//err为nil表明读取到了 不能注册
+	// err为nil表明读取到了 不能注册
 	if findErr == nil {
 		return errors.New("用户名已注册"), nil
 	} else {
@@ -44,22 +45,22 @@ func (u *User) Regist() (err error, userInter *User) {
 	return err, u
 }
 
-//修改用户密码
+// 修改用户密码
 func (u *User) ChangePassword(newPassword string) (err error, userInter *User) {
 	var user User
-	//后期修改jwt+password模式
+	// 后期修改jwt+password模式
 	u.Password = tools.MD5V(u.Password)
 	err = qmsql.DEFAULTDB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Update("password", tools.MD5V(newPassword)).Error
 	return err, u
 }
 
-//用户更新接口
+// 用户更新接口
 func (u *User) SetUserAuthority(uuid uuid.UUID, AuthorityId string) (err error) {
 	err = qmsql.DEFAULTDB.Where("uuid = ?", uuid).First(&User{}).Update("authority_id", AuthorityId).Error
 	return err
 }
 
-//用户登录
+// 用户登录
 func (u *User) Login() (err error, userInter *User) {
 	var user User
 	u.Password = tools.MD5V(u.Password)

@@ -2,7 +2,8 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"main/controller/api"
+
+	"qmserver/controller/api"
 )
 
 func InitBaseRouter(Router *gin.Engine) {
