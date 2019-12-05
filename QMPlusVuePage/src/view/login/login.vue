@@ -1,6 +1,6 @@
 <template>
   <el-container class="login-regist-box">
-    <vue-particle-line></vue-particle-line>
+<!--    <vue-particle-line></vue-particle-line>-->
     <el-main class="login-box">
       <h1 class="title-1">GIN-VUE-ADMIN</h1>
       <el-form :model="loginForm" :rules="rules" ref="loginForm" status-icon>
