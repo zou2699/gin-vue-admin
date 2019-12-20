@@ -2,9 +2,11 @@ package api
 
 import (
 	"fmt"
+
+	"github.com/gin-gonic/gin"
+
 	"gin-vue-admin/controller/servers"
 	"gin-vue-admin/model/sysModel"
-	"github.com/gin-gonic/gin"
 )
 
 type CasbinInReceive struct {

@@ -2,11 +2,13 @@ package sysModel
 
 import (
 	"fmt"
+
+	"github.com/jinzhu/gorm"
+	"github.com/pkg/errors"
+
 	"gin-vue-admin/controller/servers"
 	"gin-vue-admin/init/qmsql"
 	"gin-vue-admin/model/modelInterface"
-	"github.com/jinzhu/gorm"
-	"github.com/pkg/errors"
 )
 
 type SysBaseMenu struct {
@@ -81,7 +83,7 @@ func (b *SysBaseMenu) GetInfoList(info modelInterface.PageInfo) (err error, list
 	}
 }
 
-//获取基础路由树
+// 获取基础路由树
 func (m *SysBaseMenu) GetBaseMenuTree() (err error, menus []SysBaseMenu) {
 	err = qmsql.DEFAULTDB.Where(" parent_id = ?", 0).Order("sort", true).Find(&menus).Error
 	for i := 0; i < len(menus); i++ {

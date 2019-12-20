@@ -1,11 +1,12 @@
 package sysModel
 
 import (
-	"gin-vue-admin/init/qmsql"
 	"github.com/jinzhu/gorm"
+
+	"gin-vue-admin/init/qmsql"
 )
 
-//工作流属性表
+// 工作流属性表
 type SysWorkflow struct {
 	gorm.Model
 	WorkflowNickName    string                `json:"workflowNickName"`    // 工作流名称
@@ -25,7 +26,7 @@ type SysWorkflowStepInfo struct {
 	IsEnd           bool    `json:"isEnd"`           // 是否是完结流节点
 }
 
-//创建工作流
+// 创建工作流
 func (wk *SysWorkflow) Create() error {
 	err := qmsql.DEFAULTDB.Create(&wk).Error
 	return err

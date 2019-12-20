@@ -1,22 +1,23 @@
 package initRouter
 
 import (
-	_ "gin-vue-admin/docs"
-	"gin-vue-admin/middleware"
-	"gin-vue-admin/router"
 	"github.com/gin-gonic/gin"
 	"github.com/swaggo/gin-swagger"
 	"github.com/swaggo/gin-swagger/swaggerFiles"
+
+	_ "gin-vue-admin/docs"
+	"gin-vue-admin/middleware"
+	"gin-vue-admin/router"
 )
 
-//初始化总路由
+// 初始化总路由
 func InitRouter() *gin.Engine {
 	var Router = gin.Default()
-	//Router.Use(middleware.LoadTls())  // 打开就能玩https了
+	// Router.Use(middleware.LoadTls())  // 打开就能玩https了
 	Router.Use(middleware.Logger()) // 如果不需要日志 请关闭这里
 	Router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 	ApiGroup := Router.Group("") // 方便统一添加路由组前缀 多服务器上线使用
-	//Router.Use(middleware.Logger())
+	// Router.Use(middleware.Logger())
 	router.InitUserRouter(ApiGroup)                  // 注册用户路由
 	router.InitBaseRouter(ApiGroup)                  // 注册基础功能路由 不做鉴权
 	router.InitMenuRouter(ApiGroup)                  // 注册menu路由

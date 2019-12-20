@@ -2,11 +2,13 @@ package api
 
 import (
 	"fmt"
+
+	"github.com/gin-gonic/gin"
+
 	"gin-vue-admin/controller/servers"
 	"gin-vue-admin/middleware"
 	"gin-vue-admin/model/modelInterface"
 	"gin-vue-admin/model/sysModel"
-	"github.com/gin-gonic/gin"
 )
 
 // @Tags authorityAndMenu

@@ -1,8 +1,9 @@
 package router
 
 import (
-	"gin-vue-admin/controller/api"
 	"github.com/gin-gonic/gin"
+
+	"gin-vue-admin/controller/api"
 )
 
 func InitBaseRouter(Router *gin.RouterGroup) (R gin.IRoutes) {

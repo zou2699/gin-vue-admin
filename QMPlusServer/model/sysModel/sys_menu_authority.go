@@ -2,6 +2,7 @@ package sysModel
 
 import (
 	"fmt"
+
 	"gin-vue-admin/init/qmsql"
 )
 
@@ -41,7 +42,7 @@ func (m *SysMenu) GetMenuAuthority(authorityId string) (err error, menus []SysMe
 	return err, menus
 }
 
-//获取动态路由树
+// 获取动态路由树
 func (m *SysMenu) GetMenuTree(authorityId string) (err error, menus []SysMenu) {
 	err = qmsql.DEFAULTDB.Where("authority_id = ? AND parent_id = ?", authorityId, 0).Order("sort", true).Find(&menus).Error
 	for i := 0; i < len(menus); i++ {

@@ -1,9 +1,10 @@
 package router
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"gin-vue-admin/controller/api"
 	"gin-vue-admin/middleware"
-	"github.com/gin-gonic/gin"
 )
 
 func InitCasbinRouter(Router *gin.RouterGroup) {

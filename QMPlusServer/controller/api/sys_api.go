@@ -2,10 +2,12 @@ package api
 
 import (
 	"fmt"
+
+	"github.com/gin-gonic/gin"
+
 	"gin-vue-admin/controller/servers"
 	"gin-vue-admin/model/modelInterface"
 	"gin-vue-admin/model/sysModel"
-	"github.com/gin-gonic/gin"
 )
 
 type CreateApiParams struct {
@@ -60,7 +62,7 @@ type AuthAndPathIn struct {
 	ApiIds      []uint `json:"apiIds"`
 }
 
-//条件搜索后端看此api
+// 条件搜索后端看此api
 
 // @Tags SysApi
 // @Summary 分页获取API列表

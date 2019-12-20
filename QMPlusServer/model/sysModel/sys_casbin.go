@@ -2,10 +2,12 @@ package sysModel
 
 import (
 	"errors"
-	"gin-vue-admin/init/qmsql"
+	"strings"
+
 	"github.com/casbin/casbin"
 	gormadapter "github.com/casbin/gorm-adapter"
-	"strings"
+
+	"gin-vue-admin/init/qmsql"
 )
 
 type CasbinModel struct {
@@ -42,13 +44,13 @@ func (c *CasbinModel) CasbinApiUpdata(oldPath string, newPath string) error {
 	return err
 }
 
-//添加权限
+// 添加权限
 func (c *CasbinModel) AddCasbin(cm CasbinModel) bool {
 	e := Casbin()
 	return e.AddPolicy(cm.AuthorityId, cm.Path, cm.Method)
 }
 
-//获取权限列表
+// 获取权限列表
 func (c *CasbinModel) GetPolicyPathByAuthorityId(AuthorityId string) []string {
 	e := Casbin()
 	var pathList []string
@@ -59,7 +61,7 @@ func (c *CasbinModel) GetPolicyPathByAuthorityId(AuthorityId string) []string {
 	return pathList
 }
 
-//清除匹配的权限
+// 清除匹配的权限
 func (c *CasbinModel) clearCasbin(v int, p string) bool {
 	e := Casbin()
 	return e.RemoveFilteredPolicy(v, p)
@@ -80,7 +82,7 @@ func ParamsMatchFunc(args ...interface{}) (interface{}, error) {
 	return (bool)(ParamsMatch(name1, name2)), nil
 }
 
-//持久化到数据库  引入自定义规则
+// 持久化到数据库  引入自定义规则
 func Casbin() *casbin.Enforcer {
 	a := gormadapter.NewAdapterByDB(qmsql.DEFAULTDB)
 	e := casbin.NewEnforcer("./static/rbacmodel/rbac_model.conf", a)

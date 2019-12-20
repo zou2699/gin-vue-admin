@@ -2,10 +2,12 @@ package api
 
 import (
 	"fmt"
+
+	"github.com/gin-gonic/gin"
+
 	"gin-vue-admin/controller/servers"
 	"gin-vue-admin/model/modelInterface"
 	"gin-vue-admin/model/sysModel"
-	"github.com/gin-gonic/gin"
 )
 
 type CreateAuthorityPatams struct {
@@ -51,7 +53,7 @@ type DeleteAuthorityPatams struct {
 func DeleteAuthority(c *gin.Context) {
 	var a sysModel.SysAuthority
 	_ = c.BindJSON(&a)
-	//删除角色之前需要判断是否有用户正在使用此角色
+	// 删除角色之前需要判断是否有用户正在使用此角色
 	err := a.DeleteAuthority()
 	if err != nil {
 		servers.ReportFormat(c, false, fmt.Sprintf("删除失败：%v", err), gin.H{})

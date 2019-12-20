@@ -1,13 +1,14 @@
 package sysModel
 
 import (
+	"github.com/jinzhu/gorm"
+	"github.com/pkg/errors"
+	uuid "github.com/satori/go.uuid"
+
 	"gin-vue-admin/controller/servers"
 	"gin-vue-admin/init/qmsql"
 	"gin-vue-admin/model/modelInterface"
 	"gin-vue-admin/tools"
-	"github.com/jinzhu/gorm"
-	"github.com/pkg/errors"
-	uuid "github.com/satori/go.uuid"
 )
 
 type SysUser struct {
@@ -21,16 +22,16 @@ type SysUser struct {
 	AuthorityId string       `json:"authorityId" gorm:"default:888"`
 }
 
-//type Propertie struct {
+// type Propertie struct {
 //	gorm.Model
-//}
+// }
 
-//注册接口model方法
+// 注册接口model方法
 func (u *SysUser) Regist() (err error, userInter *SysUser) {
 	var user SysUser
-	//判断用户名是否注册
+	// 判断用户名是否注册
 	findErr := qmsql.DEFAULTDB.Where("username = ?", u.Username).First(&user).Error
-	//err为nil表明读取到了 不能注册
+	// err为nil表明读取到了 不能注册
 	if findErr == nil {
 		return errors.New("用户名已注册"), nil
 	} else {
@@ -42,22 +43,22 @@ func (u *SysUser) Regist() (err error, userInter *SysUser) {
 	return err, u
 }
 
-//修改用户密码
+// 修改用户密码
 func (u *SysUser) ChangePassword(newPassword string) (err error, userInter *SysUser) {
 	var user SysUser
-	//后期修改jwt+password模式
+	// 后期修改jwt+password模式
 	u.Password = tools.MD5V(u.Password)
 	err = qmsql.DEFAULTDB.Where("username = ? AND password = ?", u.Username, u.Password).First(&user).Update("password", tools.MD5V(newPassword)).Error
 	return err, u
 }
 
-//用户更新接口
+// 用户更新接口
 func (u *SysUser) SetUserAuthority(uuid uuid.UUID, AuthorityId string) (err error) {
 	err = qmsql.DEFAULTDB.Where("uuid = ?", uuid).First(&SysUser{}).Update("authority_id", AuthorityId).Error
 	return err
 }
 
-//用户登录
+// 用户登录
 func (u *SysUser) Login() (err error, userInter *SysUser) {
 	var user SysUser
 	u.Password = tools.MD5V(u.Password)
