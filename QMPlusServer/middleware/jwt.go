@@ -2,23 +2,12 @@ package middleware
 
 import (
 	"errors"
-	"fmt"
-	"time"
-
+	"gin-vue-admin/controller/servers"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gin-gonic/gin"
 	uuid "github.com/satori/go.uuid"
-
-	"qmserver/controller/servers"
-	"qmserver/init/qmsql"
+	"time"
 )
-
-type SqlRes struct {
-	Path        string
-	AuthorityId string
-	ApiId       uint
-	Id          uint
-}
 
 func JWTAuth() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -48,15 +37,8 @@ func JWTAuth() gin.HandlerFunc {
 			c.Abort()
 			return
 		}
-		var sqlRes SqlRes
-		row := qmsql.DEFAULTDB.Raw("SELECT apis.path,api_authorities.authority_id,api_authorities.api_id,apis.id FROM apis INNER JOIN api_authorities ON api_authorities.api_id = apis.id 	WHERE apis.path = ? AND	api_authorities.authority_id = ?", c.Request.RequestURI, claims.AuthorityId)
-		err = row.Scan(&sqlRes).Error
-		if fmt.Sprintf("%v", err) == "record not found" {
-			servers.ReportFormat(c, false, "没有Api操作权限", gin.H{})
-			c.Abort()
-			return
-		}
 		c.Set("claims", claims)
+		c.Next()
 	}
 }
 
@@ -86,7 +68,7 @@ func NewJWT() *JWT {
 	}
 }
 
-// 获取token
+//获取token
 func GetSignKey() string {
 	return SignKey
 }
@@ -97,13 +79,13 @@ func SetSignKey(key string) string {
 	return SignKey
 }
 
-// 创建一个token
+//创建一个token
 func (j *JWT) CreateToken(claims CustomClaims) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	return token.SignedString(j.SigningKey)
 }
 
-// 解析 token
+//解析 token
 func (j *JWT) ParseToken(tokenString string) (*CustomClaims, error) {
 	token, err := jwt.ParseWithClaims(tokenString, &CustomClaims{}, func(token *jwt.Token) (i interface{}, e error) {
 		return j.SigningKey, nil

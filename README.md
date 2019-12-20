@@ -12,10 +12,14 @@
 
 
 # gin-vue-admin gin+vue开源快速项目模板
+# 重构记录
+    2019年12月12日 17:15 第一次重构完成 主要更新后台数据库结构 引入casbin进行鉴权 后台代码结构整理 前端页面结构变更
+    注意！！！
+    在此时间之前拉取项目的朋友，pull代码后必须重新导入数据库数据，之前数据库结构不可使用
 本模板使用前端ui框架为 element-ui https://element.eleme.cn/#/zh-CN 前端组件可查看elementUi文档使用
 ## 写在前面
     本项目主要是小弟在接各种私活的时候发现频繁得书写CURD、权限管理、用户管理、列表、分页、上传下载、日志包封装、文档自动化等等功能
-    为了方方便各位个人开发者快速搭建项目基础模型，于是开发本模板，也为了以后自己可以剩下一些初期开发的功夫
+    为了方方便各位个人开发者快速搭建项目基础模型，于是开发本模板，也为了以后自己可以省下一些初期开发的功夫
     本身是前端出身，所以对于后端的项目目录或者架构可能偏向前端思维，如果有什么地方需要改动感谢大家iss
     强烈希望在各位的帮助下，此项目可以用于企业级项目的开发
     
@@ -23,6 +27,11 @@
     各位在clone项目以后，把db文件导入自己创建的库后，最好前往七牛云申请自己的空间地址，
     替换掉项目中的七牛云公钥，私钥，仓名和默认url地址，以免发生测试文件数据错乱
     
+## 测试环境地址
+http://qmplus.henrongyi.top/
+登陆以后为最高权限，动api权限或者菜单权限均有可能导致数据错乱，系统无法使用。请自己创建账号并设置自己角色后进行测试。
+为防止恶意操作 会定期恢复数据库 如发现系统无法使用 请联系开发者
+
 ## 环境搭建教学视频
 
 腾讯视频：https://v.qq.com/x/page/e3008xjxqtu.html
@@ -70,7 +79,7 @@
     3.go server建议使用goland运行 减少出错可能性
     4.前端项目node建议高于V8.6.0
     5.到前端项目目录下运行 npm i 安装所需依赖
-    6.依赖安装完成直接运行 npm run dev即可启动项目
+    6.依赖安装完成直接运行 npm run serve即可启动项目
     7.如果要使用swagger自动化文档 首先需要安装 swagger
 ````
 go get -u github.com/swaggo/swag/cmd/swag
@@ -109,10 +118,15 @@ swag init
     可使用的初始mysql脚本正在制作中...
 ## 联系方式
 <div align=center style="float: left">
+<img src="http://qmplusimg.henrongyi.top/jjz.jpg" width="180"/>
+<H3>Mr.奇淼</H3>
+</div>
+<div align=center style="float: left">
 <img src="http://qmplusimg.henrongyi.top/yx.jpg" width="180"/>
 <H3>krank666微信</H3>
 </div>
-<div align=center style="float: left">
-<img src="http://qmplusimg.henrongyi.top/jjz.jpg" width="180"/>
-<H3>Mr.奇淼</H3>
+
+<div align=center>
+<h3>qq交流群:622360840</h3>
+<h3>微信交流群可以添加任意一位开发者备注"加入gin-vue-admin交流群"</h3>
 </div>

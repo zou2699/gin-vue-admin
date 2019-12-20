@@ -1,13 +1,12 @@
 package servers
 
 import (
+	"gin-vue-admin/init/qmsql"
+	"gin-vue-admin/model/modelInterface"
 	"github.com/jinzhu/gorm"
-
-	"qmserver/init/qmsql"
-	"qmserver/model/modelInterface"
 )
 
-// 获取分页功能 接收实现了分页接口的结构体 返回搜索完成的结果 许需要自行scan 或者find
+//获取分页功能 接收实现了分页接口的结构体 返回搜索完成的结果 许需要自行scan 或者find
 func PagingServer(paging modelInterface.Paging, info modelInterface.PageInfo) (err error, db *gorm.DB, total int) {
 	limit := info.PageSize
 	offset := info.PageSize * (info.Page - 1)

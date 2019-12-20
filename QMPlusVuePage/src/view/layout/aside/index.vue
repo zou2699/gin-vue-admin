@@ -1,23 +1,21 @@
 <template>
   <div>
-    <div @click="isCollapse=!isCollapse" class="menu-total">
-      <i class="el-icon-arrow-right" v-if="isCollapse"></i>
-      <i class="el-icon-arrow-left" v-else></i>
-    </div>
-    <el-scrollbar style="height:calc(100vh - 52px)">
-      <transition name="el-zoom-in-top">
-        <el-menu
-          :class="['el-menu-vertical',!isCollapse&&'noCollapse']"
-          :collapse="isCollapse"
-          :default-active="active"
-          @select="selectMenuItem"
-          unique-opened
-        >
-          <template v-for="item in asyncRouters[0].children">
-            <aside-component :key="item.name" :routerInfo="item" v-if="!item.hidden" />
-          </template>
-        </el-menu>
-      </transition>
+    <el-scrollbar style="height:calc(100vh)">
+      <el-menu
+        :class="['el-menu-vertical',!isCollapse&&'noCollapse']"
+        :collapse="isCollapse"
+        :collapse-transition="true"
+        :default-active="active"
+        @select="selectMenuItem"
+        active-text-color="#fff"
+        background-color="#0F3D5F"
+        text-color="rgb(191, 203, 217)"
+        unique-opened
+      >
+        <template v-for="item in asyncRouters[0].children">
+          <aside-component :key="item.name" :routerInfo="item" v-if="!item.hidden" />
+        </template>
+      </el-menu>
     </el-scrollbar>
   </div>
 </template>
@@ -58,6 +56,11 @@ export default {
 </script>
 
 <style lang="scss">
+.el-scrollbar {
+  .el-scrollbar__view {
+    height: 100%;
+  }
+}
 .menu-info {
   .menu-contorl {
     line-height: 52px;

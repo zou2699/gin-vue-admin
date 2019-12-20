@@ -2,14 +2,13 @@ package main
 
 import (
 	"fmt"
+	"gin-vue-admin/config"
+	"gin-vue-admin/init/initRouter"
+	"gin-vue-admin/init/qmlog"
+	"gin-vue-admin/init/qmsql"
+	"gin-vue-admin/init/registTable"
 	"net/http"
 	"time"
-
-	"qmserver/config"
-	"qmserver/init/initRouter"
-	"qmserver/init/qmlog"
-	"qmserver/init/qmsql"
-	"qmserver/init/registTable"
 )
 
 // @title Swagger Example API
@@ -19,13 +18,15 @@ import (
 // @in header
 // @name x-token
 // @BasePath /
-func main() {
-	qmlog.InitLog()
-	registTable.RegistTable(qmsql.InitMysql(config.Dbconfig.Admin))
-	defer qmsql.DEFAULTDB.Close()
-	Router := initRouter.InitRouter()
-	qmlog.QMLog.Info("服务器开启") // 日志测试代码
 
+func main() {
+	qmlog.InitLog()                              // 初始化日志
+	db := qmsql.InitMysql(config.Dbconfig.Admin) // 链接初始化数据库
+	registTable.RegistTable(db)                  //注册数据库表
+	defer qmsql.DEFAULTDB.Close()                // 程序结束前关闭数据库链接
+	Router := initRouter.InitRouter()            //注册路由
+	qmlog.QMLog.Info("服务器开启")                    // 日志测试代码
+	//Router.RunTLS(":443","ssl.pem", "ssl.key")  // https支持 需要添加中间件
 	s := &http.Server{
 		Addr:           ":8888",
 		Handler:        Router,
@@ -41,8 +42,4 @@ func main() {
 默认前端文件运行地址:http://127.0.0.1:8080
 `, s.Addr)
 	_ = s.ListenAndServe()
-}
-
-func run(server *http.Server) {
-
 }

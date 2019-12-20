@@ -2,8 +2,8 @@
   <el-container class="login-regist-box">
     <vue-particle-line></vue-particle-line>
     <el-main class="login-box">
-      <h1 class="title-1">GIN-VUE-ADMIN</h1>by 奇淼
-      <el-form :model="registForm" :rules="rules" ref="registForm" status-icon>
+      <h1 class="title-1">GIN-VUE-ADMIN</h1>
+      <el-form :model="registForm" :rules="rules" ref="registForm">
         <el-form-item prop="username">
           <el-input placeholder="请输入用户名" v-model="registForm.username"></el-input>
         </el-form-item>
@@ -16,8 +16,12 @@
             <i :class="'el-input__icon el-icon-' + lock" @click="changeLock" slot="suffix"></i>
           </el-input>
         </el-form-item>
-        <el-form-item label="重复密码" prop="rePassword">
-          <el-input :type="lock==='lock'?'password':'text'" v-model="registForm.rePassword">
+        <el-form-item prop="rePassword">
+          <el-input
+            :type="lock==='lock'?'password':'text'"
+            placeholder="请再次输入密码"
+            v-model="registForm.rePassword"
+          >
             <i :class="'el-input__icon el-icon-' + lock" @click="changeLock" slot="suffix"></i>
           </el-input>
         </el-form-item>
